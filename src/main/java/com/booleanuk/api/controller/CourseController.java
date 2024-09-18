@@ -3,7 +3,6 @@ package com.booleanuk.api.controller;
 import com.booleanuk.api.dto.CourseDTO;
 import com.booleanuk.api.dto.CourseMapper;
 import com.booleanuk.api.model.Course;
-import com.booleanuk.api.model.Student;
 import com.booleanuk.api.repository.CourseRepository;
 import com.booleanuk.api.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -23,9 +22,6 @@ public class CourseController {
 
     @Autowired
     CourseRepository courseRepository;
-
-    @Autowired
-    StudentRepository studentRepository;
 
     @Autowired
     CourseMapper courseMapper;
