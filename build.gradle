@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.booleanuk'
 version = '0.0.1'
-sourceCompatibility = '17'
+sourceCompatibility = '21'
 
 configurations {
 	compileOnly {
@@ -23,9 +23,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	implementation 'org.postgresql:postgresql:42.7.1'
+	implementation 'org.postgresql:postgresql:42.7.2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// To use @Valid
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// MapStruct for mapping DTOs
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 }
 
 tasks.named('test') {
