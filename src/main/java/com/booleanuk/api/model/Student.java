@@ -30,6 +30,10 @@ public class Student {
     private String dateOfBirth;
 
     @ManyToMany
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
     Set<Course> courses;
 }
 

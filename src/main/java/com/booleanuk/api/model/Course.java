@@ -29,6 +29,6 @@ public class Course {
     @Column(name = "average_grade")
     private char averageGrade;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "courses")
     Set<Student> students;
 }
