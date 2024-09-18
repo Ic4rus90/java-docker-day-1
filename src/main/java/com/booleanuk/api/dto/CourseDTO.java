@@ -1,10 +1,13 @@
 package com.booleanuk.api.dto;
 
+import com.booleanuk.api.model.Student;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,4 +23,6 @@ public class CourseDTO {
 
     @NotBlank(message = "averageGrade is required")
     private char averageGrade;
+
+    Set<Student> students;
 }
