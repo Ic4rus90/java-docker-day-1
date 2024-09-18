@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 
 public class StudentDTO {
+    private int id;
+
     @NotBlank(message = "firstName is required")
     private String firstName;
 

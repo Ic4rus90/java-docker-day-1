@@ -2,6 +2,7 @@ package com.booleanuk.api.dto;
 
 import com.booleanuk.api.model.Student;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,15 @@ import java.util.Set;
 @NoArgsConstructor
 
 public class CourseDTO {
+    private int id;
+
     @NotBlank(message = "title is required")
     private String title;
 
     @NotBlank(message = "startDate is required")
     private String startDate;
 
-    @NotBlank(message = "averageGrade is required")
+    @NotNull(message = "averageGrade is required")
     private char averageGrade;
 
     Set<Student> students;

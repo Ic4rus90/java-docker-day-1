@@ -6,6 +6,7 @@ import com.booleanuk.api.model.Course;
 import com.booleanuk.api.model.Student;
 import com.booleanuk.api.repository.CourseRepository;
 import com.booleanuk.api.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,7 @@ public class CourseController {
         return this.courseMapper.toDTO(savedCourse);
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     CourseDTO deleteCourse(@PathVariable(name = "id") int id) throws ResponseStatusException {
         Course courseToDelete = this.courseRepository.findById(id)
@@ -75,24 +77,6 @@ public class CourseController {
 
         this.courseRepository.delete(courseToDelete);
         return this.courseMapper.toDTO(courseToDelete);
-    }
-
-    @PutMapping("/{courseId}/students/{studentId}")
-    CourseDTO addStudentToCourse(
-            @PathVariable(name = "courseId") int courseId,
-            @PathVariable(name = "studentId") int studentId) throws ResponseStatusException {
-        Course courseToUpdate = this.courseRepository.findById(courseId)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course with provided ID does not exist."));
-
-        Student studentToAdd = this.studentRepository.findById(studentId)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with provided ID does not exist."));
-
-        courseToUpdate.getStudents().add(studentToAdd);
-        Course savedCourse = this.courseRepository.save(courseToUpdate);
-
-        return this.courseMapper.toDTO(savedCourse);
     }
 
     private void update(Course courseToUpdate, CourseDTO updatedCourse) {

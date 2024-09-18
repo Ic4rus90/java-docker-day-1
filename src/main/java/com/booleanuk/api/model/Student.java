@@ -1,5 +1,7 @@
 package com.booleanuk.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +31,8 @@ public class Student {
     @Column(name = "dateOfBirth")
     private String dateOfBirth;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinTable(
             name = "student_courses",
             joinColumns = @JoinColumn(name = "student_id"),

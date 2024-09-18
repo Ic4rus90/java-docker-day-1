@@ -6,6 +6,7 @@ import com.booleanuk.api.model.Course;
 import com.booleanuk.api.model.Student;
 import com.booleanuk.api.repository.CourseRepository;
 import com.booleanuk.api.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,14 +68,18 @@ public class StudentController {
         return this.studentMapper.toDTO(savedStudent);
     }
 
+    @Transactional
+    /*
+    Ensures that the entire method runs within a transaction,
+    keeping the session open until the method completes.
+     */
     @DeleteMapping("/{id}")
     StudentDTO deleteStudent(@PathVariable (name = "id") int id) throws ResponseStatusException {
-        Student studentToDelete = this.studentRepository.findById(id)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with provided ID does not exist."));
-
-        this.studentRepository.delete(studentToDelete);
-        return this.studentMapper.toDTO(studentToDelete);
+        return this.studentRepository.findById(id).map(studentToDelete -> {
+            this.studentRepository.delete(studentToDelete);
+            return this.studentMapper.toDTO(studentToDelete);
+        }).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with provided ID does not exist."));
     }
 
     @PutMapping("/{studentId}/courses/{courseId}")

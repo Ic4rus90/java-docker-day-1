@@ -1,5 +1,7 @@
 package com.booleanuk.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +31,7 @@ public class Course {
     @Column(name = "average_grade")
     private char averageGrade;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    @JsonBackReference
     Set<Student> students;
 }
